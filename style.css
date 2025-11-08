@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: hsl(227, 75%, 14%);
+    --neutral-800: hsl(226, 25%, 17%);
+    --neutral-700: hsl(225, 23%, 24%);
+    --neutral-600: hsl(226, 11%, 37%);
+    --neutral: hsl(0, 0%, 78%);
+    --neutral-200: hsl(217, 61%, 90%);
+    --neutral-100: hsl(0, 0%, 93%);
+    --secondary-color: hsl(200, 60%, 99%);
+
+    --red-400: hsl(3, 86%, 64%);
+    --accent-2: hsl(3, 71%, 56%);
+    --accent: hsl(3, 77%, 44%);
+
+    --gradient: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
+}
+
+.dark-theme {
+    --gradient: linear-gradient(180deg, #040918 0%, #091540 100%);
+    --primary-color: hsl(200, 60%, 99%);
+    --secondary-color: hsl(226, 25%, 17%);
+}
+
+body {
+    background: var(--gradient);
+    font-family: "Noto Sans";
+    border: 1px solid red;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1170px;
+    width: 100%;
+    margin: 2.5em auto;
+}
+
+header {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--secondary-color);
+    border-radius: 18px;
+    padding: 1em 0.9em;
+}
+
+.theme-toggle {
+    padding: 1em;
+    border: none;
+    border-radius: 12px;
+    background: var(--neutral-100);
+}
+
+.logo {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    position: absolute;
+    left: 52px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.list {
+    display: flex;
+    font-size: 34px;
+    font-weight: 700;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.75em 0 1em;
+}
+
+.list p {
+    color: var(--primary-color);
+}
+
+.buttons {
+    list-style-type: none;
+    display: flex;
+    color: var(--primary-color);
+}
+
+.buttons button {
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding: 0.4em 0.95em;
+    border: none;
+    border-radius: 25px;
+    background: var(--secondary-color);
+    margin-left: 0.6em;
+}
+
+.selected {
+    background: var(--accent) !important;
+    color: var(--secondary-color);
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.card {
+    background: var(--secondary-color);
+    padding: 1.1em;
+    border-radius: 15px;
+}
+
+.top {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2.5em;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top img {
+    margin-right: 1em;
+}
+
+.name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.3em;
+    color: var(--primary-color);
+}
+
+.description {
+    font-size: 1rem;
+    color: var(--neutral-600);
+    letter-spacing: -0.03em;
+}
+.bottom button {
+    padding: 0.4em 0.85em;
+    background: none;
+    border: 1px solid var(--neutral);
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.toggle label {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+}
+
+.toggle input {
+    opacity: 0;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: var(--neutral);
+    border-radius: 20px;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: all 400ms;
+}
+
+input:checked + .slider {
+    background: var(--accent);
+}
+
+input:checked + .slider::before {
+    transform: translateX(18px);
+}
