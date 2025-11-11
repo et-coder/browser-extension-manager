@@ -8,17 +8,18 @@
 
 :root {
     --primary-color: hsl(227, 75%, 14%);
-    --neutral-800: hsl(226, 25%, 17%);
+    --secondary-color: hsl(200, 60%, 99%);
+    --text: hsl(226, 11%, 37%);
+    --white: hsl(200, 60%, 99%);
+    --accent: hsl(3, 77%, 44%);
+    --accent-2: hsl(3, 71%, 56%);
+    --btn-background: hsl(0, 0%, 78%);
+    --theme-switch-bg: hsl(0, 0%, 92%);
     --neutral-700: hsl(225, 23%, 24%);
-    --neutral-600: hsl(226, 11%, 37%);
+    --neutral-800: hsl(226, 25%, 17%);
     --neutral: hsl(0, 0%, 78%);
     --neutral-200: hsl(217, 61%, 90%);
-    --neutral-100: hsl(0, 0%, 93%);
-    --secondary-color: hsl(200, 60%, 99%);
-
     --red-400: hsl(3, 86%, 64%);
-    --accent-2: hsl(3, 71%, 56%);
-    --accent: hsl(3, 77%, 44%);
 
     --gradient: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
 }
@@ -27,6 +28,12 @@
     --gradient: linear-gradient(180deg, #040918 0%, #091540 100%);
     --primary-color: hsl(200, 60%, 99%);
     --secondary-color: hsl(226, 25%, 17%);
+    --accent: hsl(3, 86%, 64%);
+    --accent-2: hsl(3, 77%, 44%);
+    --text: hsl(0, 0%, 78%);
+    --neutral: hsl(226, 11%, 37%);
+    --btn-background: hsl(226, 11%, 37%);
+    --theme-switch-bg: hsl(225, 23%, 24%);
 }
 
 body {
@@ -57,7 +64,9 @@ header {
     padding: 1em;
     border: none;
     border-radius: 12px;
-    background: var(--neutral-100);
+    background: var(--theme-switch-bg);
+    display: flex;
+    align-items: center;
 }
 
 .logo {
@@ -66,12 +75,27 @@ header {
     align-items: center;
 }
 
+.logo svg path {
+    fill: var(--accent);
+}
+
 .logo span {
     position: absolute;
     left: 52px;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
+}
+
+.theme-toggle img:last-child {
+    display: none;
+}
+
+.dark-theme .theme-toggle img:first-child {
+    display: none;
+}
+.dark-theme .theme-toggle img:last-child {
+    display: block;
 }
 
 .list {
@@ -101,9 +125,10 @@ header {
     border-radius: 25px;
     background: var(--secondary-color);
     margin-left: 0.6em;
+    color: var(--primary-color);
 }
 
-.selected {
+.buttons .selected {
     background: var(--accent) !important;
     color: var(--secondary-color);
 }
@@ -145,7 +170,7 @@ header {
 
 .description {
     font-size: 1rem;
-    color: var(--neutral-600);
+    color: var(--text);
     letter-spacing: -0.03em;
 }
 .bottom button {
@@ -155,12 +180,13 @@ header {
     border-radius: 20px;
     font-size: 1rem;
     font-weight: 500;
+    color: var(--primary-color);
 }
 
 .toggle label {
     position: relative;
     display: inline-block;
-    width: 38px;
+    width: 36px;
     height: 20px;
 }
 
@@ -171,8 +197,8 @@ header {
 .slider {
     position: absolute;
     inset: 0;
-    background: var(--neutral);
-    border-radius: 20px;
+    background: var(--btn-background);
+    border-radius: 10px;
 }
 
 .slider::before {
@@ -180,11 +206,12 @@ header {
     position: absolute;
     width: 16px;
     height: 16px;
-    background: var(--secondary-color);
+    background: var(--white);
     border-radius: 50%;
     top: 2px;
     left: 2px;
     transition: all 400ms;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 input:checked + .slider {
@@ -192,5 +219,5 @@ input:checked + .slider {
 }
 
 input:checked + .slider::before {
-    transform: translateX(18px);
+    transform: translateX(16px);
 }
