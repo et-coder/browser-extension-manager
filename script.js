@@ -32,11 +32,8 @@ const eventListeners = () => {
       const card = e.target.parentElement.parentElement;
       const name = card.querySelector(".name").textContent;
       card.remove();
-      const newExtensions = extensions.filter(
-        (extension) => extension.name !== name,
-      );
-      console.log(newExtensions);
-      localStorage.setItem("extensions", JSON.stringify(newExtensions));
+      extensions = extensions.filter((extension) => extension.name !== name);
+      localStorage.setItem("extensions", JSON.stringify(extensions));
     });
   });
 };
@@ -84,15 +81,15 @@ const init = async () => {
 init();
 
 const filterExtensions = async (value) => {
-  const data = await getData();
-
-  const filteredData = data.filter((data) => data.isActive == value);
+  const filteredData = extensions.filter(
+    (extension) => extension.isActive == value,
+  );
   updateExtensions(filteredData);
 };
 
 // Filter Extensions
 allBtn.addEventListener("click", () => {
-  updateExtensions(getData());
+  updateExtensions(extensions);
   allBtn.classList.add("selected");
   activeBtn.classList.remove("selected");
   inactiveBtn.classList.remove("selected");
