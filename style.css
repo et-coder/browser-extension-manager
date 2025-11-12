@@ -20,6 +20,7 @@
     --neutral: hsl(0, 0%, 78%);
     --neutral-200: hsl(217, 61%, 90%);
     --red-400: hsl(3, 86%, 64%);
+    --focus: hsl(3, 71%, 56%);
 
     --gradient: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
 }
@@ -89,7 +90,7 @@ header {
 }
 
 .theme-toggle:focus-visible {
-    outline: 1px solid var(--accent-2);
+    outline: 1px solid var(--focus);
 }
 
 .theme-toggle:hover {
@@ -105,6 +106,10 @@ header {
 }
 .dark-theme .theme-toggle img:last-child {
     display: block;
+}
+
+.dark-theme button:focus-visible {
+    background: var(--neutral);
 }
 
 .list {
@@ -135,11 +140,21 @@ header {
     background: var(--secondary-color);
     margin-left: 0.6em;
     color: var(--primary-color);
+    cursor: pointer;
 }
 
 .buttons button:focus-visible {
-    outline: 2.5px solid var(--accent-2);
+    outline: 2.5px solid var(--focus);
     outline-offset: 3px;
+}
+
+.buttons button:hover {
+    opacity: 0.7;
+}
+
+.dark-theme .buttons button:hover {
+    background: var(--neutral);
+    opacity: 1;
 }
 
 .buttons .selected {
@@ -156,6 +171,7 @@ header {
 .card {
     background: var(--secondary-color);
     padding: 1.1em;
+    box-shadow: 0px 0px 0px 2px var(--neutral);
     border-radius: 15px;
 }
 
@@ -197,13 +213,20 @@ header {
     font-size: 1rem;
     font-weight: 500;
     color: var(--primary-color);
+    cursor: pointer;
 }
 
 .remove:focus-visible {
-    outline: 2.5px solid var(--accent);
+    outline: 2.5px solid var(--focus);
     outline-offset: 2px;
     border: none;
     background: var(--theme-switch-bg);
+}
+
+.remove:hover {
+    background: var(--accent);
+    color: var(--secondary-color);
+    outline: none;
 }
 
 .toggle {
@@ -222,11 +245,15 @@ header {
     width: 36px;
     height: 20px;
     /*border: 1px solid green;*/
+    cursor: pointer;
+}
+
+.toggle label:hover {
+    opacity: 0.8;
 }
 
 .toggle input {
     opacity: 0;
-    /*display: none;*/
 }
 
 .slider {
@@ -237,7 +264,7 @@ header {
 }
 
 .toggle input:focus-visible + .slider {
-    outline: 2.5px solid var(--accent-2);
+    outline: 2.5px solid var(--focus);
     outline-offset: 2.5px;
 }
 
