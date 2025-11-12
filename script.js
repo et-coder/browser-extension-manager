@@ -2,6 +2,12 @@ const themeSwitch = document.querySelector(".theme-toggle");
 const body = document.querySelector("body");
 const cards = document.querySelector(".cards");
 const theme = localStorage.getItem("theme"); // Get current theme from local storage
+
+const buttons = document.querySelector(".buttons");
+const allBtn = document.querySelector(".all");
+const activeBtn = document.querySelector(".active");
+const inactiveBtn = document.querySelector(".inactive");
+
 // Set dark theme if present
 if (theme == "dark") body.classList.add("dark-theme");
 
@@ -12,14 +18,32 @@ themeSwitch.addEventListener("click", () => {
     : localStorage.setItem("theme", "light");
 });
 
+let extensions;
+
 const getData = async () => {
   const res = await fetch("./data.json");
-  const data = await res.json();
-  return data;
+  return res.json();
+};
+
+const eventListeners = () => {
+  const removeBtn = document.querySelectorAll(".remove");
+  removeBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const card = e.target.parentElement.parentElement;
+      const name = card.querySelector(".name").textContent;
+      card.remove();
+      const newExtensions = extensions.filter(
+        (extension) => extension.name !== name,
+      );
+      console.log(newExtensions);
+      localStorage.setItem("extensions", JSON.stringify(newExtensions));
+    });
+  });
 };
 
 const updateExtensions = async (data) => {
-  const extensions = await Promise.resolve(data);
+  const extensions = await data;
+  cards.innerHTML = "";
   extensions.forEach((extension) => {
     const card = document.createElement("div");
     card.className = "card";
@@ -45,6 +69,43 @@ const updateExtensions = async (data) => {
       `;
     cards.appendChild(card);
   });
+  eventListeners();
 };
 
-updateExtensions(getData());
+const init = async () => {
+  localStorage.getItem("extensions") == null
+    ? localStorage.setItem("extensions", JSON.stringify(await getData()))
+    : null;
+  extensions = JSON.parse(localStorage.getItem("extensions"));
+
+  updateExtensions(extensions);
+};
+
+init();
+
+const filterExtensions = async (value) => {
+  const data = await getData();
+
+  const filteredData = data.filter((data) => data.isActive == value);
+  updateExtensions(filteredData);
+};
+
+// Filter Extensions
+allBtn.addEventListener("click", () => {
+  updateExtensions(getData());
+  allBtn.classList.add("selected");
+  activeBtn.classList.remove("selected");
+  inactiveBtn.classList.remove("selected");
+});
+activeBtn.addEventListener("click", () => {
+  filterExtensions(true);
+  activeBtn.classList.add("selected");
+  allBtn.classList.remove("selected");
+  inactiveBtn.classList.remove("selected");
+});
+inactiveBtn.addEventListener("click", () => {
+  filterExtensions(false);
+  inactiveBtn.classList.add("selected");
+  activeBtn.classList.remove("selected");
+  allBtn.classList.remove("selected");
+});
