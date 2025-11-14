@@ -15,11 +15,7 @@
     --accent-2: hsl(3, 71%, 56%);
     --btn-background: hsl(0, 0%, 78%);
     --theme-switch-bg: hsl(0, 0%, 92%);
-    --neutral-700: hsl(225, 23%, 24%);
-    --neutral-800: hsl(226, 25%, 17%);
     --neutral: hsl(0, 0%, 78%);
-    --neutral-200: hsl(217, 61%, 90%);
-    --red-400: hsl(3, 86%, 64%);
     --focus: hsl(3, 71%, 56%);
 
     --gradient: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
