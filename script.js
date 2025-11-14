@@ -3,7 +3,7 @@ const body = document.querySelector("body");
 const cards = document.querySelector(".cards");
 const theme = localStorage.getItem("theme"); // Get current theme from local storage
 
-const buttons = document.querySelector(".buttons");
+const buttons = document.querySelectorAll(".buttons button");
 const allBtn = document.querySelector(".all");
 const activeBtn = document.querySelector(".active");
 const inactiveBtn = document.querySelector(".inactive");
@@ -26,6 +26,24 @@ const getData = async () => {
 };
 
 const eventListeners = () => {
+  // Filter Extensions
+  allBtn.addEventListener("click", () => {
+    updateExtensions(extensions);
+    buttons.forEach((button) => button.classList.remove("selected"));
+    allBtn.classList.add("selected");
+  });
+  activeBtn.addEventListener("click", () => {
+    filterExtensions(true);
+    buttons.forEach((button) => button.classList.remove("selected"));
+    activeBtn.classList.add("selected");
+  });
+  inactiveBtn.addEventListener("click", () => {
+    filterExtensions(false);
+    buttons.forEach((button) => button.classList.remove("selected"));
+    inactiveBtn.classList.add("selected");
+  });
+
+  // Remove Extension
   const removeBtn = document.querySelectorAll(".remove");
   removeBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -34,6 +52,26 @@ const eventListeners = () => {
       card.remove();
       extensions = extensions.filter((extension) => extension.name !== name);
       localStorage.setItem("extensions", JSON.stringify(extensions));
+    });
+  });
+
+  const toggles = document.querySelectorAll(".toggle input");
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", (e) => {
+      const name = e.target.id;
+      extensions.forEach((extension) => {
+        if (extension.name == name) {
+          extension.isActive = extension.isActive ? false : true;
+        }
+      });
+      localStorage.setItem("extensions", JSON.stringify(extensions));
+      if (activeBtn.classList.contains("selected")) {
+        if (!e.target.checked) {
+          filterExtensions(true);
+        }
+      } else if (inactiveBtn.classList.contains("selected")) {
+        if (e.target.checked) filterExtensions(false);
+      }
     });
   });
 };
@@ -57,8 +95,8 @@ const updateExtensions = async (data) => {
           <div class="bottom">
               <button class="remove">Remove</button>
               <div class="toggle">
-                  <label for="toggle-${extension.name}">
-                  <input type="checkbox" id="toggle-${extension.name}" ${extension.isActive ? "checked" : null}/>
+                  <label for="${extension.name}">
+                  <input type="checkbox" id="${extension.name}" ${extension.isActive ? "checked" : ""}/>
                       <span class="slider"></span>
                   </label>
               </div>
@@ -69,17 +107,6 @@ const updateExtensions = async (data) => {
   eventListeners();
 };
 
-const init = async () => {
-  localStorage.getItem("extensions") == null
-    ? localStorage.setItem("extensions", JSON.stringify(await getData()))
-    : null;
-  extensions = JSON.parse(localStorage.getItem("extensions"));
-
-  updateExtensions(extensions);
-};
-
-init();
-
 const filterExtensions = async (value) => {
   const filteredData = extensions.filter(
     (extension) => extension.isActive == value,
@@ -87,22 +114,12 @@ const filterExtensions = async (value) => {
   updateExtensions(filteredData);
 };
 
-// Filter Extensions
-allBtn.addEventListener("click", () => {
+const init = async () => {
+  if (localStorage.getItem("extensions") == null)
+    localStorage.setItem("extensions", JSON.stringify(await getData()));
+  extensions = JSON.parse(localStorage.getItem("extensions"));
+
   updateExtensions(extensions);
-  allBtn.classList.add("selected");
-  activeBtn.classList.remove("selected");
-  inactiveBtn.classList.remove("selected");
-});
-activeBtn.addEventListener("click", () => {
-  filterExtensions(true);
-  activeBtn.classList.add("selected");
-  allBtn.classList.remove("selected");
-  inactiveBtn.classList.remove("selected");
-});
-inactiveBtn.addEventListener("click", () => {
-  filterExtensions(false);
-  inactiveBtn.classList.add("selected");
-  activeBtn.classList.remove("selected");
-  allBtn.classList.remove("selected");
-});
+};
+
+init();
