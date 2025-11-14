@@ -29,7 +29,7 @@ const eventListeners = () => {
   // Filter Extensions
   allBtn.addEventListener("click", () => {
     updateExtensions(extensions);
-    buttons.forEach((button) => button.classList.remove("selected"));
+    buttons.forEach((button) => button.classList.remove("selected")); // Remove styling from unselected buttons
     allBtn.classList.add("selected");
   });
   activeBtn.addEventListener("click", () => {
@@ -50,8 +50,8 @@ const eventListeners = () => {
       const card = e.target.parentElement.parentElement;
       const name = card.querySelector(".name").textContent;
       card.remove();
-      extensions = extensions.filter((extension) => extension.name !== name);
-      localStorage.setItem("extensions", JSON.stringify(extensions));
+      extensions = extensions.filter((extension) => extension.name !== name); // Remove extension from the array
+      localStorage.setItem("extensions", JSON.stringify(extensions)); // Remove extension from local storage;
     });
   });
 
@@ -61,16 +61,14 @@ const eventListeners = () => {
       const name = e.target.id;
       extensions.forEach((extension) => {
         if (extension.name == name) {
-          extension.isActive = extension.isActive ? false : true;
+          extension.isActive = extension.isActive ? false : true; // Reverse the value
         }
       });
-      localStorage.setItem("extensions", JSON.stringify(extensions));
+      localStorage.setItem("extensions", JSON.stringify(extensions)); // Update the local storage
       if (activeBtn.classList.contains("selected")) {
-        if (!e.target.checked) {
-          filterExtensions(true);
-        }
+        if (!e.target.checked) filterExtensions(true); // Filter extensions when toggle is clicked on active tab
       } else if (inactiveBtn.classList.contains("selected")) {
-        if (e.target.checked) filterExtensions(false);
+        if (e.target.checked) filterExtensions(false); // Filter extensions when toggle is clicked on inactive tab
       }
     });
   });
@@ -114,6 +112,7 @@ const filterExtensions = async (value) => {
   updateExtensions(filteredData);
 };
 
+// Initialize the page;
 const init = async () => {
   if (localStorage.getItem("extensions") == null)
     localStorage.setItem("extensions", JSON.stringify(await getData()));
