@@ -248,10 +248,6 @@ header {
     cursor: pointer;
 }
 
-.toggle label:hover {
-    opacity: 0.8;
-}
-
 .toggle input {
     opacity: 0;
 }
