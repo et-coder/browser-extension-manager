@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [solution URL here](https://www.frontendmentor.io/solutions/browser-extension-manager-LrclXg7mZm)
 - Live Site URL: [live site URL here](https://et-coder.github.io/browser-extension-manager/)
 
 ## My process
